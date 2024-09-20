@@ -30,3 +30,11 @@ export const appConfig = appConfigurationSchema.parse({
   appHost: process.env.APP_HOST,
   apiDocsRoute: process.env.API_DOCS_ROUTE,
 });
+
+const bcryptConfigSchema = new Config({
+  salt: Config.number().required(),
+})
+
+export const bcryptConfig = bcryptConfigSchema.parse({
+  salt: process.env.BCRYPT_SALT_ROUND
+})
