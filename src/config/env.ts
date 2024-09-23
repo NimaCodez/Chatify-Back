@@ -33,8 +33,18 @@ export const appConfig = appConfigurationSchema.parse({
 
 const bcryptConfigSchema = new Config({
   salt: Config.number().required(),
-})
+});
 
 export const bcryptConfig = bcryptConfigSchema.parse({
-  salt: process.env.BCRYPT_SALT_ROUND
-})
+  salt: process.env.BCRYPT_SALT_ROUND,
+});
+
+const JwtConfigSchema = new Config({
+  secret: Config.string().required(),
+  expiresIn: Config.string().required(),
+});
+
+export const jwtConfig = JwtConfigSchema.parse({
+  secret: process.env.JWT_ACCESS_TOKEN_SECRET,
+  expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRES_IN,
+});

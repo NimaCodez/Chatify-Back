@@ -3,12 +3,19 @@ import { AppModule } from './modules/app/app.module';
 import { appConfig } from './config/env';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { configSwagger } from './config/swagger.config';
+import { ValidationPipe } from '@nestjs/common';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.useGlobalPipes(new ValidationPipe());
+  app.use(cookieParser());
   configSwagger(app)
+
   await app.listen(appConfig.get('port'));
 }
+
 bootstrap()
   .then(() => {
     console.log(`Server started on port ${appConfig.get('port')}`);
