@@ -8,7 +8,6 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { HashService } from './hash.service';
 import { JWTService } from './jwt.service';
-import { NemiService } from './also.service';
 import { jwtConfig } from 'src/config/env';
 
 @Module({
@@ -26,7 +25,7 @@ import { jwtConfig } from 'src/config/env';
     JwtStrategy,
     HashService,
     JwtService,
-    NemiService
+    JWTService
   ],
 })
 export class AuthModule {}

@@ -30,8 +30,10 @@ export class AuthController {
       required: ['username', 'password'],
     },
   })
-  async login(@Req() req: Request, @Res() res: Response) {
+
+  // TODO: change auth to cookie
+  async login(@Req() req: Request) {
     console.log(req.user);
-    await this.authService.login(req.user);
+    return await this.authService.login(req.user);
   }
 }

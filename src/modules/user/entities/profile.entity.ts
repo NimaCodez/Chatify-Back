@@ -3,11 +3,11 @@ import { UserEntity } from './user.entity';
 
 @Entity({ name: 'profiles' })
 export class ProfileEntity {
-  @PrimaryGeneratedColumn('increment')
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
-  user_id: number;
+  user_id: string;
 
   @OneToOne(() => UserEntity, user => user.profile)
   user: UserEntity;
@@ -22,6 +22,9 @@ export class ProfileEntity {
   website: string;
 
   // Twitter handle
+  @Column({ nullable: true })
+  x: string;
+
   @Column({ nullable: true })
   birthday: Date;
 

@@ -10,17 +10,15 @@ import { UserEntity } from '../user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { RepetitiveData } from '../user/dtos/repetitiveData.dto';
 import { Response } from 'src/common/utils/create-reponse';
-import { ProfileEntity } from '../user/entities/profile.entity';
 import { HashService } from './hash.service';
-import { NemiService } from './also.service';
+import { JWTService } from './jwt.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(UserEntity) private userRepo: Repository<UserEntity>,
-    @InjectRepository(ProfileEntity)
     private hashService: HashService,
-    private JJJWtSS: NemiService,
+    private jwtService: JWTService,
   ) {}
 
   async signup(signupDtp: UserSignupDto) {
@@ -42,7 +40,7 @@ export class AuthService {
   }
 
   async login(user: Partial<UserEntity>) {
-    const accessToken = await this.JJJWtSS.signAccessToken(user);
+    const accessToken = await this.jwtService.signAccessToken(user);
     return accessToken;
   }
 

@@ -10,8 +10,8 @@ import { Profile } from 'passport';
 
 @Entity({ name: 'users ' })
 export class UserEntity {
-  @PrimaryGeneratedColumn('increment')
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ unique: true })
   username: string;
@@ -23,7 +23,7 @@ export class UserEntity {
   email: string;
 
   @Column({ nullable: true })
-  profile_id: number;
+  profile_id: string;
 
   @OneToOne(() => ProfileEntity, prof => prof.user)
   profile: Profile;
