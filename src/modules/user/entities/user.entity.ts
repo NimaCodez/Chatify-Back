@@ -3,7 +3,6 @@ import {
   Entity,
   OneToOne,
   PrimaryGeneratedColumn,
-  Unique,
 } from 'typeorm';
 import { ProfileEntity } from './profile.entity';
 import { Profile } from 'passport';
@@ -15,7 +14,7 @@ export class UserEntity {
 
   @Column({ unique: true })
   username: string;
-  
+
   @Column()
   password: string;
 
@@ -25,6 +24,9 @@ export class UserEntity {
   @Column({ nullable: true })
   profile_id: string;
 
-  @OneToOne(() => ProfileEntity, prof => prof.user)
+  @OneToOne(() => ProfileEntity, prof => prof.user, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   profile: Profile;
 }

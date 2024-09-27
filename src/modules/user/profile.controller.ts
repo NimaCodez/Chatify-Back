@@ -14,6 +14,7 @@ export class ProfileController {
     @PassportJWTVerification()
     @Get()
     async me(@Req() req: Request) {
+        console.log(req.user)
         return await this.profileService.getMe(req.user);
     }
 

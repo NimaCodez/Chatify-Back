@@ -12,8 +12,8 @@ export const configSwagger = (app: INestApplication): void => {
       type:'http',
       bearerFormat: 'JWT',
       in: 'header',
+      scheme: 'bearer'
     })
-    .addBearerAuth(swaggerAuthConfig(), 'Authorization')
     .setVersion('1.0')
     .build();
 
