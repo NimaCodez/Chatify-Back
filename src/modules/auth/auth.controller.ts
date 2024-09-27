@@ -1,10 +1,10 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { UserSignupDto } from '../user/dtos/signup.dto';
 import { AuthService } from './auth.service';
 import { ApiBody, ApiConsumes, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { SwaggerConsumes } from 'src/common/enums/swagger-consumes.enum';
 import { LocalAuthGuard } from './guards/local.guard';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 
 @Controller('/auth')
 @ApiTags('Auth')
@@ -30,8 +30,8 @@ export class AuthController {
       required: ['username', 'password'],
     },
   })
-  login(@Req() req: Request) {
+  async login(@Req() req: Request, @Res() res: Response) {
     console.log(req.user);
-    return this.authService.login(req.user);
+    await this.authService.login(req.user);
   }
 }

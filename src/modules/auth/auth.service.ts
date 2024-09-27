@@ -3,38 +3,38 @@ import {
   HttpStatus,
   Injectable,
   NotFoundException,
-  Scope,
 } from '@nestjs/common';
 import { UserSignupDto } from '../user/dtos/signup.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { RepetitiveData } from '../user/dtos/repetitiveData.dto';
-import { HashService } from './hash.service';
 import { Response } from 'src/common/utils/create-reponse';
-import { JWTService } from './jwt.service';
+import { ProfileEntity } from '../user/entities/profile.entity';
+import { HashService } from './hash.service';
+import { NemiService } from './also.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(UserEntity) private userRepo: Repository<UserEntity>,
+    @InjectRepository(ProfileEntity)
     private hashService: HashService,
-    private jwtService: JWTService,
+    private JJJWtSS: NemiService,
   ) {}
 
   async signup(signupDtp: UserSignupDto) {
     const { username, email, password } = signupDtp;
-
     await this.checkUsernameOrEmailExistence(username, email);
 
     const hashedPassword = await this.hashService.hash(password);
     const user = this.userRepo.create({
       username,
-      email,
       password: hashedPassword,
+      email,
     });
-
     const createUserResult = await this.userRepo.save(user);
+
     if (createUserResult.id)
       return Response('User was Created', HttpStatus.CREATED, {
         userId: user.id,
@@ -42,8 +42,8 @@ export class AuthService {
   }
 
   async login(user: Partial<UserEntity>) {
-    const accessToken = await this.jwtService.signAccessToken(user);
-    return Response('User Logged In', HttpStatus.OK, accessToken);
+    const accessToken = await this.JJJWtSS.signAccessToken(user);
+    return accessToken;
   }
 
   async checkUsernameOrEmailExistence(username: string, email: string) {

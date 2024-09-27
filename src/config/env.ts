@@ -48,3 +48,11 @@ export const jwtConfig = JwtConfigSchema.parse({
   secret: process.env.JWT_ACCESS_TOKEN_SECRET,
   expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRES_IN,
 });
+
+const cookieConfigSchema = new Config({
+  secret: Config.string().required(),
+});
+
+export const cookieConfig = cookieConfigSchema.parse({
+  secret: process.env.COOKIE_SECRET,
+});

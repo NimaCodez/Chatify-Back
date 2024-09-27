@@ -23,8 +23,6 @@ export class JWTService {
     return { accessToken };
   }
 
-  verifyAccessToken() {}
-
   signRefreshToken() {}
 
   verifyRefreshToken() {}

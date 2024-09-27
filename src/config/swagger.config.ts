@@ -8,6 +8,11 @@ export const configSwagger = (app: INestApplication): void => {
     .setTitle('Chatify API')
     .setDescription('Chatify API description')
     .setContact('Telegram', 'https://t.me/NimaCodes', 'nimacodez@gmail.com')
+    .addCookieAuth('accessToken', {
+      type:'http',
+      bearerFormat: 'JWT',
+      in: 'header',
+    })
     .addBearerAuth(swaggerAuthConfig(), 'Authorization')
     .setVersion('1.0')
     .build();
