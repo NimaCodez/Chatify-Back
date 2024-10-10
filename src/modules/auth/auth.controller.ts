@@ -7,7 +7,7 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { UserSignupDto } from '../user/dtos/signup.dto';
+import { UserSignupDto } from './dtos/signup.dto';
 import { AuthService } from './auth.service';
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { SwaggerConsumes } from 'src/common/enums/swagger-consumes.enum';
@@ -42,7 +42,6 @@ export class AuthController {
 
   // TODO: change auth to cookie
   async login(@Req() req: Request, @Res() res: Response) {
-    console.log(req.user);
     const { accessToken } = await this.authService.login(req.user);
     res.cookie('authorization', accessToken, {
       httpOnly: true,
@@ -50,6 +49,8 @@ export class AuthController {
       domain: 'localhost',
     });
 
-    return res.json(CreateResponse('cookie was set', HttpStatus.OK));
+    return res.json(CreateResponse('Logged in successfully 🎉', HttpStatus.OK));
   }
+
+  async forgotPassword() {}
 }

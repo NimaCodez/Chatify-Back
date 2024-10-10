@@ -1,9 +1,4 @@
-import {
-  Column,
-  Entity,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ProfileEntity } from './profile.entity';
 import { Profile } from 'passport';
 
@@ -29,4 +24,7 @@ export class UserEntity {
     onDelete: 'CASCADE',
   })
   profile: Profile;
+
+  @Column({ nullable: true })
+  otp_id: number;
 }

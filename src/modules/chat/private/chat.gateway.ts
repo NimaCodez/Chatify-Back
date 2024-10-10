@@ -18,12 +18,14 @@ export class ChatGateway
   afterInit(server: any) {
     log('Socket initialized');
   }
+
   handleConnection(client: Socket, ...args: any[]) {
     const { sockets } = this.server.sockets;
     log('handle connected');
     log(`ClientID: ${client.id} connected.`);
     log(`Online users ${sockets.size}`);
   }
+
   handleDisconnect(client: Socket) {
     const { sockets } = this.server.sockets;
     log('disconnected');

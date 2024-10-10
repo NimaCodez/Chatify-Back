@@ -50,10 +50,9 @@ export class ProfileService {
 
     let profile: ProfileEntity | UpdateResult =
       await this.profileRepo.findOneBy({ user_id: userId });
-    if (!profile) throw new NotFoundException('User not found');
+    if (!profile) throw new NotFoundException("This username does't exist.");
 
     const updateBody = await this.filterNullAndUndefinedValues(reqBody);
-    console.log(updateBody)
     profile = await this.profileRepo.update(
       { user_id: userId },
       { ...updateBody },
@@ -62,14 +61,12 @@ export class ProfileService {
   }
 
   async filterNullAndUndefinedValues(requestBody: object) {
-    console.log(requestBody)
     let updateBody = { ...requestBody };
     for (const [key, value] of Object.entries(updateBody)) {
       if (value !== undefined && value !== null) {
         updateBody[key] = value;
       }
     }
-    console.log(updateBody)
     return updateBody;
   }
 }

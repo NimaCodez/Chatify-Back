@@ -9,9 +9,12 @@ import * as cookieParser from 'cookie-parser';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+  app.enableCors({
+    origin: 'http://localhost:5173',
+  });
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser(cookieConfig.get('secret')));
-  configSwagger(app)
+  configSwagger(app);
 
   await app.listen(appConfig.get('port'));
 }

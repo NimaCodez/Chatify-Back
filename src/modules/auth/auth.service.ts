@@ -4,11 +4,11 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { UserSignupDto } from '../user/dtos/signup.dto';
+import { UserSignupDto } from './dtos/signup.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../user/entities/user.entity';
 import { Repository } from 'typeorm';
-import { RepetitiveData } from '../user/dtos/repetitiveData.dto';
+import { RepetitiveData } from './dtos/repetitiveData.dto';
 import { Response } from 'src/common/utils/create-reponse';
 import { HashService } from './hash.service';
 import { JWTService } from './jwt.service';
@@ -34,14 +34,16 @@ export class AuthService {
     const createUserResult = await this.userRepo.save(user);
 
     if (createUserResult.id)
-      return Response('User was Created', HttpStatus.CREATED, {
-        userId: user.id,
-      });
+      return Response('Registered successfully 🎉', HttpStatus.CREATED);
   }
 
   async login(user: Partial<UserEntity>) {
     const accessToken = await this.jwtService.signAccessToken(user);
     return accessToken;
+  }
+
+  async forgotPassword(forgotPassword: string) {
+    // send verification code to email.
   }
 
   async checkUsernameOrEmailExistence(username: string, email: string) {
@@ -78,7 +80,7 @@ export class AuthService {
     pass: string,
   ): Promise<UserEntity | null> {
     const user = await this.userRepo.findOneBy({ username });
-    if (!user) throw new NotFoundException('User not found');
+    if (!user) throw new NotFoundException("This username does't exist.");
     const compareResult = await this.hashService.comparePasswords(
       pass,
       user.password,

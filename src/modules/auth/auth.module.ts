@@ -15,7 +15,7 @@ import { jwtConfig } from 'src/config/env';
     UserModule,
     PassportModule,
     JwtModule.register({
-      secret: jwtConfig.get('secret')
+      secret: jwtConfig.get('secret'),
     }),
   ],
   controllers: [AuthController],
@@ -25,7 +25,7 @@ import { jwtConfig } from 'src/config/env';
     JwtStrategy,
     HashService,
     JwtService,
-    JWTService
+    JWTService,
   ],
 })
 export class AuthModule {}

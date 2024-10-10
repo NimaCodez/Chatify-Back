@@ -12,7 +12,6 @@ const cookieExtractor = (req: Request) => {
   return token;
 };
 
-
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
     super({

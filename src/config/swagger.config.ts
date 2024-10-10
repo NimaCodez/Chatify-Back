@@ -9,16 +9,16 @@ export const configSwagger = (app: INestApplication): void => {
     .setDescription('Chatify API description')
     .setContact('Telegram', 'https://t.me/NimaCodes', 'nimacodez@gmail.com')
     .addCookieAuth('accessToken', {
-      type:'http',
+      type: 'http',
       bearerFormat: 'JWT',
       in: 'header',
-      scheme: 'bearer'
+      scheme: 'bearer',
     })
     .setVersion('1.0')
     .build();
 
   const swaggerDocs = SwaggerModule.createDocument(app, document);
-  
+
   SwaggerModule.setup(appConfig.get('apiDocsRoute'), app, swaggerDocs);
 };
 
