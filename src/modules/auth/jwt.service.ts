@@ -12,7 +12,7 @@ export class JWTService {
   ): Promise<{ accessToken: string }> {
     const payload: JwtPayload = {
       username: user.username,
-      sub: user.id,
+      userId: user.id,
     };
 
     const accessToken = await this.jwtService.signAsync(payload, {

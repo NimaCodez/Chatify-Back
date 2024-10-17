@@ -12,6 +12,7 @@ import { RepetitiveData } from './dtos/repetitiveData.dto';
 import { Response } from 'src/common/utils/create-reponse';
 import { HashService } from './hash.service';
 import { JWTService } from './jwt.service';
+import { RedisService } from '../redis/redis.service';
 
 @Injectable()
 export class AuthService {
@@ -19,6 +20,7 @@ export class AuthService {
     @InjectRepository(UserEntity) private userRepo: Repository<UserEntity>,
     private hashService: HashService,
     private jwtService: JWTService,
+    private redisService: RedisService,
   ) {}
 
   async signup(signupDtp: UserSignupDto) {
@@ -39,6 +41,20 @@ export class AuthService {
 
   async login(user: Partial<UserEntity>) {
     const accessToken = await this.jwtService.signAccessToken(user);
+
+    const { id, username: userName, email, profile_id } = user;
+    const cacheUser = {
+      id,
+      userName,
+      email,
+      profile_id,
+    };
+
+    await this.redisService.setValue(
+      `${user.id}-${user.username}`,
+      JSON.stringify(cacheUser),
+    );
+
     return accessToken;
   }
 
@@ -90,4 +106,6 @@ export class AuthService {
     }
     return null;
   }
+
+  getUser() {}
 }

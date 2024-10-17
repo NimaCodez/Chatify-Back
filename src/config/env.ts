@@ -56,3 +56,15 @@ const cookieConfigSchema = new Config({
 export const cookieConfig = cookieConfigSchema.parse({
   secret: process.env.COOKIE_SECRET,
 });
+
+const redisConfigSchema = new Config({
+  host: Config.string().required(),
+  port: Config.number().required(),
+  redisExpirationTime: Config.number().required(),
+});
+
+export const redisConfig = redisConfigSchema.parse({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+  redisExpirationTime: process.env.REDIS_EXPIRATION_TIME,
+});

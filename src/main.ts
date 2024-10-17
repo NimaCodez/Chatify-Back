@@ -5,6 +5,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { configSwagger } from './config/swagger.config';
 import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
+import * as morgan from 'morgan';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -13,6 +14,7 @@ async function bootstrap() {
     origin: 'http://localhost:5173',
   });
   app.useGlobalPipes(new ValidationPipe());
+  app.use(morgan('dev'));
   app.use(cookieParser(cookieConfig.get('secret')));
   configSwagger(app);
 

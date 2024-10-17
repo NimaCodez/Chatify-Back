@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpStatus,
   Post,
   Req,
@@ -14,6 +15,7 @@ import { SwaggerConsumes } from 'src/common/enums/swagger-consumes.enum';
 import { LocalAuthGuard } from './guards/local.guard';
 import { Request, Response } from 'express';
 import { Response as CreateResponse } from 'src/common/utils/create-reponse';
+import { PassportJWTVerification } from 'src/common/decorators/passport-jwt-verification.decorator';
 
 @Controller('/auth')
 @ApiTags('Auth')
@@ -39,8 +41,6 @@ export class AuthController {
       required: ['username', 'password'],
     },
   })
-
-  // TODO: change auth to cookie
   async login(@Req() req: Request, @Res() res: Response) {
     const { accessToken } = await this.authService.login(req.user);
     res.cookie('authorization', accessToken, {
@@ -53,4 +53,8 @@ export class AuthController {
   }
 
   async forgotPassword() {}
+
+  @Get('authenticate-token')
+  @PassportJWTVerification()
+  async validateUserByAccessToken() {}
 }

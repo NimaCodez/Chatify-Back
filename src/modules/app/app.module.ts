@@ -7,9 +7,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfig } from 'src/config/typeorm.config';
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from '../user/user.module';
+import { RedisModule } from '../redis/redis.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(TypeOrmConfig()), AuthModule, UserModule],
+  imports: [
+    TypeOrmModule.forRoot(TypeOrmConfig()),
+    RedisModule,
+    AuthModule,
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [AppService, ChatGateway, IndexGateway],
 })

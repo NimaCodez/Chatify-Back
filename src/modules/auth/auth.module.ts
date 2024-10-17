@@ -9,6 +9,9 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { HashService } from './hash.service';
 import { JWTService } from './jwt.service';
 import { jwtConfig } from 'src/config/env';
+import { RedisModule } from '../redis/redis.module';
+import { RedisService } from '../redis/redis.service';
+import { UserService } from '../user/user.service';
 
 @Module({
   imports: [
@@ -17,6 +20,7 @@ import { jwtConfig } from 'src/config/env';
     JwtModule.register({
       secret: jwtConfig.get('secret'),
     }),
+    RedisModule,
   ],
   controllers: [AuthController],
   providers: [
@@ -26,6 +30,8 @@ import { jwtConfig } from 'src/config/env';
     HashService,
     JwtService,
     JWTService,
+    RedisService,
+    UserService,
   ],
 })
 export class AuthModule {}
